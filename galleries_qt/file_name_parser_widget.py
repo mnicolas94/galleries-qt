@@ -3,7 +3,7 @@ from pathlib import Path
 from PySide2 import QtWidgets, QtCore
 
 from galleries.gallery_annots_parsers import FileNameSepParser, GalleryAnnotationsParser
-from uix.qtutils import setup_widget_from_ui
+from mnd_qtutils.qtutils import setup_widget_from_ui
 from galleries_qt.gallery_annotations_parser_view import GalleryAnnotationsParserView
 
 

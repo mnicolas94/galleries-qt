@@ -9,7 +9,7 @@ from galleries.galleries_management import GalleriesManagement
 from galleries.gallery import Gallery
 from galleries.gallery_annots_parsers import FileNameSepParser
 from galleries.igallery import IGallery
-from uix.qtutils import setup_widget_from_ui, icon_from_image
+from mnd_qtutils.qtutils import setup_widget_from_ui, icon_from_image
 import mnd_utils.image
 from galleries_qt.gallery_wizard import GalleryWizard
 

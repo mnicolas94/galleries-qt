@@ -53,6 +53,7 @@ if __name__ == '__main__':
             install_requires=[
                 'galleries',
                 'mnd_utils',
+                'mnd_qtutils',
                 'numpy',
                 'opencv-python',
                 'PySide2',

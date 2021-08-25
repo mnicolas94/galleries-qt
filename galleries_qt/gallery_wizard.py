@@ -7,7 +7,7 @@ from galleries.gallery import Gallery
 from galleries.gallery_annots_parsers import FileNameSepParser
 from galleries_qt.file_name_parser_widget import FileNameParserWidget
 from galleries_qt.gallery_annotations_parser_view import GalleryAnnotationsParserView
-from uix.qtutils import setup_widget_from_ui
+from mnd_qtutils.qtutils import setup_widget_from_ui
 
 
 class GalleryWizard(QtWidgets.QWidget):
