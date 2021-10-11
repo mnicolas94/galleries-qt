@@ -40,13 +40,10 @@ class GalleryWizard(QtWidgets.QWidget):
         self._recursive_checkbox: QtWidgets.QCheckBox = self._widget.recursive_checkbox
         self._recursive_checkbox.stateChanged.connect(self._set_dirty())
 
-        # self._parser_combobox: QtWidgets.QComboBox = self._widget.parser_combobox
-        # self._parser_combobox.currentIndexChanged.connect(self._on_parser_changed)
-        # self._parser_container: QtWidgets.QStackedWidget = self._widget.parser_widget_container
-
+        self._parser_container: QtWidgets.QWidget = self._widget.parser_container
         self._parser_selector = ConfigurableSelector(base_class=GalleryAnnotationsParser)
         self._parser_selector.eventObjectSelected.connect(self._on_parser_changed)
-        self.layout().addWidget(self._parser_selector)
+        self._parser_container.layout().addWidget(self._parser_selector)
 
     def is_dirty(self):
         dirty = self._dirty
