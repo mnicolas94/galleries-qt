@@ -1,7 +1,7 @@
 import abc
 from PySide2 import QtWidgets
 
-from galleries.gallery_annots_parsers import GalleryAnnotationsParser
+from galleries.annotations_parsers.gallery_annots_parsers import GalleryAnnotationsParser
 
 
 class GalleryAnnotationsParserView(QtWidgets.QWidget):

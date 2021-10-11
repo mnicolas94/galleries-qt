@@ -4,8 +4,11 @@ from pathlib import Path
 from PySide2 import QtWidgets, QtGui, QtCore
 
 from galleries.gallery import Gallery
-from galleries.gallery_annots_parsers import FileNameSepParser
-from galleries_qt.file_name_parser_widget import FileNameParserWidget
+from galleries.annotations_parsers.file_name_parser import FileNameSepParser, GalleryAnnotationsParser
+from galleries.images_providers.local_files_image_providers import LocalFilesImageProvider
+from pyrulo_qt.ui_configurable_selector import ConfigurableSelector
+
+from galleries_qt.parser_widgets.file_name_parser_widget import FileNameParserWidget
 from galleries_qt.gallery_annotations_parser_view import GalleryAnnotationsParserView
 from mnd_qtutils.qtutils import setup_widget_from_ui
 
@@ -37,32 +40,34 @@ class GalleryWizard(QtWidgets.QWidget):
         self._recursive_checkbox: QtWidgets.QCheckBox = self._widget.recursive_checkbox
         self._recursive_checkbox.stateChanged.connect(self._set_dirty())
 
-        self._parser_combobox: QtWidgets.QComboBox = self._widget.parser_combobox
-        self._parser_combobox.currentIndexChanged.connect(self._on_parser_changed)
-        self._parser_container: QtWidgets.QStackedWidget = self._widget.parser_widget_container
+        # self._parser_combobox: QtWidgets.QComboBox = self._widget.parser_combobox
+        # self._parser_combobox.currentIndexChanged.connect(self._on_parser_changed)
+        # self._parser_container: QtWidgets.QStackedWidget = self._widget.parser_widget_container
 
-        self._populate_parsers_combobox()
+        self._parser_selector = ConfigurableSelector(base_class=GalleryAnnotationsParser)
+        self._parser_selector.eventObjectSelected.connect(self._on_parser_changed)
+        self.layout().addWidget(self._parser_selector)
 
     def is_dirty(self):
         dirty = self._dirty
-        parser_dirty = self._current_parser_widget().is_dirty()
-        return dirty or parser_dirty
+        return dirty
 
     def _current_parser_widget(self) -> GalleryAnnotationsParserView:
         return self._parser_container.currentWidget()
 
     def set_gallery(self, gallery_name: str, gallery: Gallery):
         self._name_edit.setText(gallery_name)
-        self._path_edit.setText(gallery.directory)
-        self._set_combobox_index_by_parser(gallery.annotations_parser)
-        self._recursive_checkbox.setChecked(gallery.recursive)
+        self._path_edit.setText(gallery.images_provider.directory)  # FIXME directory es específico de LocalFilesImageProvider
+        self._recursive_checkbox.setChecked(gallery.images_provider.recursive)  # FIXME recursive es específico de LocalFilesImageProvider
+        self._set_parser_ui_by_parser(gallery.annotations_parser)
         self._dirty = False
 
     def get_gallery(self) -> Gallery:
         directory = self._path_edit.text()
-        parser = self._current_parser_widget().get_parser()
         recursive = self._recursive_checkbox.checkState() == QtCore.Qt.Checked
-        gallery = Gallery(directory, parser, recursive=recursive)
+        images_provider = LocalFilesImageProvider(directory, recursive)
+        parser = self._parser_selector.current_object()
+        gallery = Gallery(images_provider, parser)
         return gallery
 
     def get_name(self) -> str:
@@ -71,25 +76,16 @@ class GalleryWizard(QtWidgets.QWidget):
     def clear(self):
         self._name_edit.setText('')
         self._path_edit.setText('')
-        self._parser_combobox.setCurrentIndex(0)
-        parser = self._current_parser_widget()
-        parser.clear()
+        self._parser_selector.set_current_index(0)
         self._dirty = False
 
-    def _set_combobox_index_by_parser(self, parser: type):
-        for i, (parser_name, parser_widget, parser_class) in enumerate(self._parsers_widgets):
-            if isinstance(parser, parser_class):
-                self._parser_combobox.setCurrentIndex(i)
-                parser_widget.populate_with_parser(parser)
-                break
-
-    def _populate_parsers_combobox(self):
-        for parser_name, parser_widget, parser_class in self._parsers_widgets:
-            self._parser_combobox.addItem(parser_name)
-            self._parser_container.addWidget(parser_widget)
+    def _set_parser_ui_by_parser(self, parser):
+        parser_class = type(parser)
+        self._parser_selector.add_class(parser_class)
+        self._parser_selector.set_object_for_class(parser_class, parser)
+        self._parser_selector.select_class(parser_class)
 
     def _on_parser_changed(self, index):
-        self._parser_container.setCurrentIndex(index)
         self._set_dirty()
 
     def _select_gallery_path(self):

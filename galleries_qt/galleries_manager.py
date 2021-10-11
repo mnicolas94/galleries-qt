@@ -7,8 +7,9 @@ from PySide2.QtCore import QSize
 
 from galleries.galleries_management import GalleriesManagement
 from galleries.gallery import Gallery
-from galleries.gallery_annots_parsers import FileNameSepParser
+from galleries.annotations_parsers.file_name_parser import FileNameSepParser
 from galleries.igallery import IGallery
+from galleries.images_providers.local_files_image_providers import LocalFilesImageProvider
 from mnd_qtutils.qtutils import setup_widget_from_ui, icon_from_image
 import mnd_utils.image
 from galleries_qt.gallery_wizard import GalleryWizard
@@ -102,8 +103,9 @@ class GalleriesManager(QtWidgets.QWidget):
 
     @QtCore.Slot()
     def _add_empty_gallery(self):
+        images_provider = LocalFilesImageProvider('')
         parser = FileNameSepParser([], '')
-        gallery = Gallery('', parser)
+        gallery = Gallery(images_provider, parser)
         self._add_gallery_to_list('', gallery)
 
     @QtCore.Slot()
@@ -158,10 +160,10 @@ class GalleryListWidgetItem(QtWidgets.QListWidgetItem):
         self.setIcon(icon)
 
     def _get_first_image_icon(self, gallery: IGallery, icon_size: QSize) -> QtGui.QIcon:
-        paths = gallery.get_paths()
+        indices = gallery.get_indices()
         try:
-            first_image_path = next(paths)
-            image = cv.imread(first_image_path)
+            first_image_index = next(indices)
+            image = cv.imread(first_image_index)
         except:
             image = np.ones((64, 64, 3)).astype(np.uint8) * 127
         image = cv.cvtColor(image, cv.COLOR_BGR2RGB)

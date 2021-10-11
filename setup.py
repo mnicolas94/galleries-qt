@@ -49,7 +49,10 @@ if __name__ == '__main__':
             long_description=long_description,
             long_description_content_type="text/markdown",
             url="https://github.com/mnicolas94/galleries_qt",
-            packages=['galleries_qt'],
+            packages=[
+                'galleries_qt',
+                'galleries_qt.parser_widgets'
+            ],
             install_requires=[
                 'galleries',
                 'mnd_utils',

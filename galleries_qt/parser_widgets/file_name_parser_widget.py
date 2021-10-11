@@ -2,12 +2,15 @@ import os
 from pathlib import Path
 from PySide2 import QtWidgets, QtCore
 
-from galleries.gallery_annots_parsers import FileNameSepParser, GalleryAnnotationsParser
+from galleries.annotations_parsers.file_name_parser import FileNameSepParser, GalleryAnnotationsParser
 from mnd_qtutils.qtutils import setup_widget_from_ui
+from propsettings_qt.object_drawers.object_drawer import ObjectDrawer
+
 from galleries_qt.gallery_annotations_parser_view import GalleryAnnotationsParserView
 
 
-class FileNameParserWidget(GalleryAnnotationsParserView):
+class FileNameParserWidget(GalleryAnnotationsParserView, ObjectDrawer):
+
     SEP = ';'
 
     def __init__(self, parent=None):
@@ -31,6 +34,12 @@ class FileNameParserWidget(GalleryAnnotationsParserView):
         return parser
 
     def populate_with_parser(self, parser: FileNameSepParser):
+        self._sep_edit.setText(parser.sep)
+        annots = f'{self.SEP}'.join(parser.annot_names)
+        self._annot_edit.setText(annots)
+        self._dirty = False
+
+    def draw_object(self, parser: FileNameSepParser):
         self._sep_edit.setText(parser.sep)
         annots = f'{self.SEP}'.join(parser.annot_names)
         self._annot_edit.setText(annots)
