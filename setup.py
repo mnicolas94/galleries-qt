@@ -54,7 +54,7 @@ if __name__ == '__main__':
                 'galleries_qt.parser_widgets'
             ],
             install_requires=[
-                'galleries',
+                'galleries>=0.2.1',
                 'mnd_utils',
                 'mnd_qtutils',
                 'numpy',
