@@ -59,6 +59,8 @@ if __name__ == '__main__':
                 'mnd_qtutils',
                 'numpy',
                 'opencv-python',
+                'propsettings_qt>=0.2.1',
+                'pyrulo-qt>=0.3.1',
                 'PySide2',
             ],
             classifiers=[
