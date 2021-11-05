@@ -28,4 +28,5 @@ class GalleriesCombobox(QtWidgets.QWidget):
 
     def current_gallery_selected(self):
         gallery = self._combobox.currentData()
-        return gallery
+        gallery_name = self._combobox.currentText()
+        return gallery_name, gallery
