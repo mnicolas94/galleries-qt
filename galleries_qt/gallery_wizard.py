@@ -64,7 +64,8 @@ class GalleryWizard(QtWidgets.QWidget):
         recursive = self._recursive_checkbox.checkState() == QtCore.Qt.Checked
         images_provider = LocalFilesImageProvider(directory, recursive)
         parser = self._parser_selector.current_object()
-        gallery = Gallery(images_provider, parser)
+        gallery_name = self._name_edit.text()
+        gallery = Gallery(gallery_name, images_provider, parser)
         return gallery
 
     def get_name(self) -> str:

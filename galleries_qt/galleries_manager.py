@@ -105,7 +105,7 @@ class GalleriesManager(QtWidgets.QWidget):
     def _add_empty_gallery(self):
         images_provider = LocalFilesImageProvider('')
         parser = FileNameSepParser([], '')
-        gallery = Gallery(images_provider, parser)
+        gallery = Gallery("", images_provider, parser)
         self._add_gallery_to_list('', gallery)
 
     @QtCore.Slot()
