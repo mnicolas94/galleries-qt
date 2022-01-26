@@ -36,23 +36,19 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="path_label">
-        <property name="text">
-         <string>Ubicacion:</string>
-        </property>
-       </widget>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="name_edit"/>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="parser_label">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>Lector de anotaciones:</string>
+         <string>Fuente:</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QWidget" name="path_fields" native="true">
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <widget class="QWidget" name="provider_container" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -65,28 +61,15 @@
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="QLineEdit" name="path_edit"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="path_button">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="recursive_checkbox">
-           <property name="text">
-            <string>Recursiva</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="name_edit"/>
+      <item row="2" column="0">
+       <widget class="QLabel" name="parser_label">
+        <property name="text">
+         <string>Lector de anotaciones:</string>
+        </property>
+       </widget>
       </item>
       <item row="2" column="1">
        <widget class="QWidget" name="parser_container" native="true">
