@@ -163,7 +163,7 @@ class GalleryListWidgetItem(QtWidgets.QListWidgetItem):
         indices = gallery.get_indices()
         try:
             first_image_index = next(indices)
-            image = cv.imread(first_image_index)
+            image = gallery.get_image_by_index(first_image_index)
         except:
             image = np.ones((64, 64, 3)).astype(np.uint8) * 127
         image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
