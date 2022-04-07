@@ -75,7 +75,7 @@ if __name__ == '__main__':
             url="https://github.com/mnicolas94/galleries_qt",
             packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
             install_requires=[
-                'galleries>=0.4.0',
+                'galleries>=0.4.2',
                 'mnd_utils>=0.1.7',
                 'mnd_qtutils',
                 'numpy',
