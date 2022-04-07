@@ -81,7 +81,7 @@ if __name__ == '__main__':
                 'numpy',
                 'opencv-python',
                 'propsettings_qt>=0.2.8',
-                'pyrulo-qt>=0.3.5',
+                'pyrulo-qt>=0.3.6',
                 'PySide2',
             ],
             classifiers=[
